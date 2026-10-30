@@ -1,0 +1,16 @@
+import "server-only";
+
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export function readSession() {
+  return cookies().get("desa_session")?.value ?? null;
+}
+
+export async function requireLogin() {
+  const value = readSession();
+  if (!value) {
+    redirect("/login");
+  }
+  return value;
+}
