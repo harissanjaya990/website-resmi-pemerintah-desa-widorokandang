@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getPublicHomeData() {
-  const [news, announcements, settings, latestGallery] = await Promise.all([
+  const [news, announcements, settings, galleries] = await Promise.all([
     prisma.news.findMany({
       where: { status: "PUBLISHED" },
       orderBy: { publishedAt: "desc" },
@@ -18,14 +18,7 @@ export async function getPublicHomeData() {
     prisma.gallery.findMany({ orderBy: { createdAt: "desc" }, take: 4 }),
   ]);
 
-  return { news, announcements, settings, latestGallery };
-}
-
-export async function getNewsList() {
-  return prisma.news.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { publishedAt: "desc" },
-  });
+  return { news, announcements, settings, galleries };
 }
 
 export function getSettingValue(settings: { key: string; value: string }[], key: string, fallback = "") {

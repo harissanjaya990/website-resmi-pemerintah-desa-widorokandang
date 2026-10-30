@@ -1,17 +1,13 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
 
-export const prisma = new PrismaClient();
-
-export function getSessionCookie() {
+export function readSession() {
   return cookies().get("desa_session")?.value ?? null;
 }
 
-export async function requireAdminSession() {
-  const session = getSessionCookie();
-  if (!session) {
-    redirect("/login");
+export async function requireLogin() {
+  const value = readSession();
+  if (!value) {
+    throw new Error("Unauthorized");
   }
-  return session;
+  return value;
 }

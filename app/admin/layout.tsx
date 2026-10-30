@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { readSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { readSession } from "@/lib/auth";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const session = readSession();
@@ -17,7 +17,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <a href="/admin/documents" className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700">Dokumen</a>
         <a href="/admin/administrators" className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700">Administrator</a>
         <form action={logoutAction} className="ml-auto">
-          <button className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700" type="submit">Logout</button>
+          <button type="submit" className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700">
+            Logout
+          </button>
         </form>
       </aside>
       <div>{children}</div>
